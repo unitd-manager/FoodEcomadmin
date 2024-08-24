@@ -30,14 +30,13 @@ const StaffDetails = () => {
   //Api call for Insert Staff Data
   const insertStaffData = () => {
     staffdetails.creation_date = creationdatetime;
+    staffdetails.created_by = loggedInuser.first_name;
 
     if (!staffdetails.email) {
       message('Email is required', 'warning');
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(staffdetails.email)) {
       message('Invalid email address', 'warning');
     } else if (staffdetails.email !== '' && staffdetails.first_name !== '') {
-      staffdetails.creation_date = creationdatetime;
-      staffdetails.created_by = loggedInuser.first_name;
       api
         .post('/staff/insertStaff', staffdetails)
         .then((res) => {

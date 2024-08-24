@@ -41,6 +41,7 @@ const StaffEdit = () => {
   const handleInputs = (e) => {
     setStaffEditDetails({ ...staffeditdetails, [e.target.name]: e.target.value });
   };
+  
   //Setting Picture Data
   const dataForPicture = () => {
     setDataForPicture({
@@ -87,13 +88,12 @@ const StaffEdit = () => {
 
   const editStaffData = () => {
     staffeditdetails.modification_date = creationdatetime;
+    staffeditdetails.modified_by = loggedInuser.first_name;
     if (!staffeditdetails.email) {
       message('Email is required', 'warning');
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(staffeditdetails.email)) {
       message('Enter valid email', 'warning');
     } else if (staffeditdetails.email !== '' && staffeditdetails.first_name !== '') {
-      staffeditdetails.modification_date = creationdatetime;
-      staffeditdetails.modified_by = loggedInuser.first_name;
       api.post('/staff/editStaff', staffeditdetails)
         .then(() => {
           message('Record editted successfully', 'success');
