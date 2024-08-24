@@ -10,15 +10,16 @@ import 'datatables.net-buttons/js/buttons.flash';
 // import 'datatables.net-buttons/js/buttons.html5';
 // import 'datatables.net-buttons/js/buttons.print';
 import { Link } from 'react-router-dom';
-import message from '../../components/Message';
+// import message from '../../components/Message';
 import api from '../../constants/api';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import CommonTable from '../../components/CommonTable';
+import SortOrder from '../../components/SortOrder';
 
 const Valuelist = () => {
   // All state variables
   const [valuelist, setValuelist] = useState();
-  const [selectedItem, setSelectedSortingItem] = useState();
+  // const [selectedItem, setSelectedSortingItem] = useState();
   const [loading, setLoading] = useState(false);
 
   //Api call for getting Valuelist Data
@@ -47,20 +48,20 @@ const Valuelist = () => {
       });
   };
 
-  // API call for Update Sort Order
-  const changeSortingOrder = (e) => {
-    /* eslint-disable-next-line */
-    selectedItem.sort_order = parseInt(e.target.value);
-    /* eslint-disable-line */
-    api
-      .post('/valuelist/updateSortOrder', selectedItem)
-      .then(() => {
-        getValuelist();
-      })
-      .catch(() => {
-        message('Cannot get Update Data', 'error');
-      });
-  };
+  // // API call for Update Sort Order
+  // const changeSortingOrder = (e) => {
+  //   /* eslint-disable-next-line */
+  //   selectedItem.sort_order = parseInt(e.target.value);
+  //   /* eslint-disable-line */
+  //   api
+  //     .post('/valuelist/updateSortOrder', selectedItem)
+  //     .then(() => {
+  //       getValuelist();
+  //     })
+  //     .catch(() => {
+  //       message('Cannot get Update Data', 'error');
+  //     });
+  // };
 
   useEffect(() => {
     getValuelist();
@@ -160,18 +161,12 @@ const Valuelist = () => {
                     <td>{element.code}</td>
                     <td>{element.valuelist_id}</td>
                     <td>
-                      <input
-                        onFocus={() => {
-                          setSelectedSortingItem(element);
-                        }}
-                        onBlur={(e) => {
-                          changeSortingOrder(e);
-                        }}
-                        type="number"
-                        min="0"
-                        name="sort_order"
-                        defaultValue={element.sort_order ? element.sort_order.toString() : 0}
-                      />
+                    <SortOrder
+                       idValue={element.sub_category_id}
+                       idColumn="valuelist_id"
+                       tablename="valuelist"
+                       value={element.sort_order}>
+                    </SortOrder>
                     </td>
                   </tr>
                 );
