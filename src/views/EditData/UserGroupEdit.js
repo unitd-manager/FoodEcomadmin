@@ -9,7 +9,7 @@ import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
 import message from '../../components/Message';
-import UserGroupButtons from '../../components/userGroup/UserGroupButtons';
+import UserGroupButtons from '../../components/UserGroup/UserGroupButtons';
 import AppContext from '../../context/AppContext';
 
 const UserGroupEdit = () => {
@@ -84,7 +84,6 @@ const UserGroupEdit = () => {
       .then(() => {
         message('Record edited successfully', 'success');
         getRoomUserGroup();
- 
       })
       .catch(() => {
         message('Unable to edit record.', 'error');
@@ -96,7 +95,6 @@ const UserGroupEdit = () => {
       .post('/usergroup/edit-usergroup', userGroupDetails)
       .then(() => {
         message('Record edited successfully', 'success');
-      
       })
       .catch(() => {
         message('Unable to edit record.', 'error');
@@ -129,7 +127,6 @@ const UserGroupEdit = () => {
   const handleOnChange = (e, item) => {
     item = { ...item, modification_date: creationdatetime };
     item = { ...item, [e.target.name]: e.target.checked === true ? 1 : 0 };
-    console.log(item);
     if (item.room_user_group_id) {
       editRoomUserGroup(item);
     } else {
@@ -151,7 +148,6 @@ const UserGroupEdit = () => {
 
       result.push(allValues);
     });
-    console.log(result);
     result.forEach((obj) => {
       editRoomUserGroup(obj);
     });
@@ -203,7 +199,6 @@ const UserGroupEdit = () => {
   return (
     <>
       <div className="MainDiv">
-       
         <div className="">
           <ToastContainer></ToastContainer>
           <Row>
@@ -226,7 +221,7 @@ const UserGroupEdit = () => {
                         <Label>Title</Label>
                         <Input
                           type="text"
-                          value={userGroupDetails && userGroupDetails.section_title}
+                          value={userGroupDetails && userGroupDetails.title}
                           onChange={handleInputs}
                           name="title"
                         />
@@ -288,7 +283,6 @@ const UserGroupEdit = () => {
                               type="checkbox"
                               value="1"
                               name="list"
-                              // checked={isChecked}
                               onChange={(e) => {
                                 handleOnChange(e, element);
                               }}
@@ -302,7 +296,6 @@ const UserGroupEdit = () => {
                               type="checkbox"
                               value="1"
                               name="detail"
-                              // checked={isChecked}
                               onChange={(e) => {
                                 handleOnChange(e, element);
                               }}
@@ -423,7 +416,6 @@ const UserGroupEdit = () => {
                   <td>Reports / Widgets</td>
                 </tr>
               </tbody>
-             
             </Table>
           </ComponentCard>
         </div>

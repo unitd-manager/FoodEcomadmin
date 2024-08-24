@@ -23,7 +23,6 @@ const UserGroupDetails = () => {
   const getSection = () => {
     api.get('/usergroup/getSectionsforusergroup').then((res) => {
       setSection(res.data.data);
-      console.log(res.data.data);
     });
   };
 
@@ -33,7 +32,6 @@ const UserGroupDetails = () => {
       .post('/usergroup/insertUserGroup', userGroupDetails)
       .then((res) => {
         const insertedDataId = res.data.data.insertId;
-        console.log(insertedDataId);
         section.forEach((elem) => {
           elem.user_group_id = insertedDataId;
           api
@@ -85,12 +83,9 @@ const UserGroupDetails = () => {
                       color="primary"
                       onClick={() => {
                         createUserGroup();
-                        setTimeout(() => {
-                          navigate('/UserGroupEdit');
-                        }, 800);
                       }}
                     >
-                      Save
+                      Save & Continue
                     </Button>
                     <Button
                       onClick={() => {

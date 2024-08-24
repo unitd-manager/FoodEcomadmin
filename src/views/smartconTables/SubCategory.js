@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import * as Icon from 'react-feather';
-import { Button } from 'reactstrap';
+import { Button} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'datatables.net-dt/js/dataTables.dataTables';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import $ from 'jquery';
 import 'datatables.net-buttons/js/buttons.colVis';
 import 'datatables.net-buttons/js/buttons.flash';
-import 'datatables.net-buttons/js/buttons.html5';
-import 'datatables.net-buttons/js/buttons.print';
+// import 'datatables.net-buttons/js/buttons.html5';
+// import 'datatables.net-buttons/js/buttons.print';
 import { Link, useParams } from 'react-router-dom';
 import api from '../../constants/api';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
@@ -19,7 +19,13 @@ import SortOrder from '../../components/SortOrder';
 const SubCategory = () => {
   // All state variables
   const [subcategory, setSubCategory] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
+
+  const getSelectedLanguageFromLocalStorage = () => {
+    return localStorage.getItem('selectedLanguage') || '';
+  };
+  
+  const selectedLanguage = getSelectedLanguageFromLocalStorage();
 
   // Navigation and Parameter Constants
   const { id } = useParams();
@@ -35,24 +41,53 @@ const SubCategory = () => {
           pageLength: 20,
           processing: true,
           dom: 'Bfrtip',
-          buttons: [
-            {
-              extend: 'print',
-              text: 'Print',
-              className: 'shadow-none btn btn-primary',
-            },
-          ],
+        //   buttons: [ {
+        //     extend: 'print',
+        //     text: "Print",
+        //     className:"shadow-none btn btn-primary",
+        // }],
         });
-        setLoading(false);
+        setLoading(false)
+      }).catch(()=>{
+        setLoading(false)
+      });
+    };
+  
+  useEffect(() => {
+    getSubCategory();
+  }, [id]);
+
+  const [arabic, setArabic] = useState([]);
+
+
+  const arb =selectedLanguage === 'Arabic'
+
+  // const eng =selectedLanguage === 'English'
+   
+
+  const getTranslationForSubCategory = () => {
+      api
+      .get('/subcategory/getTranslationForSubCategory')
+      .then((res) => {
+        setArabic(res.data.data);
       })
       .catch(() => {
-        setLoading(false);
-      });
+        // Handle error if needed
+      });   
   };
 
+
   useEffect(() => {
-     getSubCategory();
-  }, [id]);
+    getTranslationForSubCategory();
+  }, []);
+
+  let genLabel = '';
+
+  if (arb === true) {
+    genLabel = 'arb_value';
+  } else {
+    genLabel = 'value';
+  }
 
   //Structure of Subcategory List view
   const columns = [
@@ -64,7 +99,7 @@ const SubCategory = () => {
       wrap: true,
     },
     {
-      name: 'Edit',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.Edit')?.[genLabel], 
       selector: 'edit',
       cell: () => <Icon.Edit2 />,
       grow: 0,
@@ -73,47 +108,47 @@ const SubCategory = () => {
       sortable: false,
     },
     {
-      name: 'Title',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.Title')?.[genLabel],
       selector: 'sub_category_title',
       sortable: true,
       grow: 0,
       wrap: true,
     },
     {
-      name: 'Order',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.Order')?.[genLabel],
       selector: 'sort_order',
       sortable: true,
       grow: 0,
       width: 'auto',
     },
     {
-      name: 'Sub Cat Child Type',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.SubCatChildType')?.[genLabel],
       selector: 'sub_category_type',
       sortable: true,
       grow: 0,
     },
     {
-      name: 'Section',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.Section')?.[genLabel],
       selector: 'section_title',
       sortable: true,
       grow: 0,
     },
     {
-      name: 'Category',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.Category')?.[genLabel],
       selector: 'category_title',
       sortable: true,
       grow: 2,
       width: 'auto',
     },
     {
-      name: 'ID',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.ID')?.[genLabel], 
       selector: 'sub_category_id',
       sortable: true,
       grow: 2,
       wrap: true,
     },
     {
-      name: 'Published',
+      name: arabic.find(item => item.key_text === 'mdSubCategory.Published')?.[genLabel],
       selector: 'published',
       sortable: true,
       grow: 2,
@@ -127,11 +162,12 @@ const SubCategory = () => {
         <BreadCrumbs />
 
         <CommonTable
-          loading={loading}
-          title="SubCategory List"
+        loading={loading}
+          title={arb ? 'قائمة الفئات الفرعية': 'SubCategory List'}
+          module='SubCategory'
           Button={
             <Link to="/SubCategoryDetails">
-              <Button color="primary" className="shadow-none">
+              <Button color="primary" className="shadow-none mr-2">
                 Add New
               </Button>
             </Link>
@@ -155,30 +191,30 @@ const SubCategory = () => {
                         <Icon.Edit2 />
                       </Link>
                     </td>
-                    <td>{element.sub_category_title}</td>
+                    <td>{arb && element.sub_category_title_arb ?element.sub_category_title_arb : element.sub_category_title}</td>
                     <td>
-                      <SortOrder
-                        idValue={element.sub_category_id}
-                        idColumn="sub_category_id"
-                        tablename="sub_category"
-                        value={element.sort_order}
-                      ></SortOrder>
+                    <SortOrder
+                       idValue={element.sub_category_id}
+                       idColumn="sub_category_id"
+                       tablename="sub_category"
+                       value={element.sort_order}>
+                    </SortOrder>
                     </td>
-                    <td>{element.sub_category_type}</td>
-                    <td>{element.section_title}</td>
-                    <td>{element.category_title}</td>
+                    <td>{arb && element.sub_category_type_arb ?element.sub_category_type_arb : element.sub_category_type}</td>
+                    <td>{arb && element.section_title_arb ?element.section_title_arb : element.section_title}</td>
+                    <td>{arb && element.category_title_arb ?element.category_title_arb : element.category_title}</td>
                     <td>{element.sub_category_id}</td>
                     <td>
-                      <Publish
+                    <Publish
                         idColumn="sub_category_id"
                         tablename="sub_category"
                         idValue={element.sub_category_id.toString()}
-                        value={element.published}
+                        value={arb && element.published_arb ?element.published_arb : element.published}
                       ></Publish>
                     </td>
                   </tr>
                 );
-              })}
+              })}an
           </tbody>
         </CommonTable>
       </div>

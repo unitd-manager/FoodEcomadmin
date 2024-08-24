@@ -166,16 +166,25 @@ const EnquiryEdit = () => {
                 </FormGroup>
               </Col>
               <Col md="4">
-                <FormGroup>
-                  <Label>Status</Label>
-                  <Input
-                    type="numbers"
-                    onChange={handleInputs}
-                    value={enquiryDetails && enquiryDetails.status}
-                    name="status"
-                  />
-                </FormGroup>
-              </Col>
+                          <FormGroup>
+                            <Label>Status</Label>
+                            <Input
+                              type="select"
+                              name="status"
+                              onChange={handleInputs}
+                              value={enquiryDetails && enquiryDetails.status}
+                            >
+                              {' '}
+                              <option value="" selected="selected">
+                                Please Select
+                              </option>
+                              <option value="Pending">Pending</option>
+                              <option value="InProgress">InProgress</option>
+                              <option value="Completed">Completed</option>
+                              <option value="OnHold">OnHold</option>
+                            </Input>
+                          </FormGroup>
+                        </Col>
 
               <Col md="4">
                 <FormGroup>

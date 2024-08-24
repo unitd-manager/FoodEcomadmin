@@ -7,11 +7,10 @@ import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import $ from 'jquery';
 import 'datatables.net-buttons/js/buttons.colVis';
 import 'datatables.net-buttons/js/buttons.flash';
-import 'datatables.net-buttons/js/buttons.html5';
-import 'datatables.net-buttons/js/buttons.print';
+// import 'datatables.net-buttons/js/buttons.html5';
+// import 'datatables.net-buttons/js/buttons.print';
 import { Link } from 'react-router-dom';
 import message from '../../components/Message';
-import Publish from '../../components/Publish';
 import api from '../../constants/api';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import CommonTable from '../../components/CommonTable';
@@ -33,13 +32,13 @@ const Valuelist = () => {
           pageLength: 20,
           processing: true,
           dom: 'Bfrtip',
-          buttons: [
-            {
-              extend: 'print',
-              text: 'Print',
-              className: 'shadow-none btn btn-primary',
-            },
-          ],
+          // buttons: [
+          //   {
+          //     extend: 'print',
+          //     text: 'Print',
+          //     className: 'shadow-none btn btn-primary',
+          //   },
+          // ],
         });
         setLoading(false);
       })
@@ -64,21 +63,6 @@ const Valuelist = () => {
   };
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   $('#example').DataTable({
-    //     pagingType: 'full_numbers',
-    //     pageLength: 20,
-    //     processing: true,
-    //     dom: 'Bfrtip',
-    //     buttons: [
-    //       {
-    //         extend: 'print',
-    //         text: 'Print',
-    //         className: 'shadow-none btn btn-primary',
-    //       },
-    //     ],
-    //   });
-    // }, 1000);
     getValuelist();
   }, []);
 
@@ -118,8 +102,7 @@ const Valuelist = () => {
       name: 'Code',
       selector: 'code',
       sortable: true,
-      width: 'auto',
-      grow: 3,
+      grow: 0,
     },
     {
       name: 'ID',
@@ -135,13 +118,6 @@ const Valuelist = () => {
       grow: 2,
       width: 'auto',
     },
-    {
-      name: 'Published',
-      selector: 'published',
-      sortable: true,
-      width: 'auto',
-      grow: 3,
-    },
   ];
 
   return (
@@ -152,9 +128,10 @@ const Valuelist = () => {
         <CommonTable
           loading={loading}
           title="Value List"
+          module='Value List'
           Button={
             <Link to="/ValuelistDetails">
-              <Button color="primary" className=" shadow-none">
+              <Button color="primary" className=" shadow-none mr-2">
                 Add New
               </Button>
             </Link>
@@ -195,14 +172,6 @@ const Valuelist = () => {
                         name="sort_order"
                         defaultValue={element.sort_order ? element.sort_order.toString() : 0}
                       />
-                    </td>
-                    <td>
-                      <Publish
-                        idColumn="valuelist_id "
-                        tablename="valuelist"
-                        idValue={element.valuelist_id.toString()}
-                        value={element.published}
-                      ></Publish>
                     </td>
                   </tr>
                 );
