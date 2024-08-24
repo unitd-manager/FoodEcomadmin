@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import message from '../../components/Message';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
 import DeleteButton from '../../components/DeleteButton';
+import AppContext from '../../context/AppContext';
 
 const EnquiryEdit = () => {
   //All state variable
@@ -18,6 +19,8 @@ const EnquiryEdit = () => {
   //navigation and parameters
   const { id } = useParams();
   const navigate = useNavigate();
+  const { loggedInuser } = useContext(AppContext);
+
   const applyChanges = () => {};
   const backToList = () => {
     navigate('/Enquiry');
@@ -39,8 +42,9 @@ const EnquiryEdit = () => {
   };
   //Update Setting
   const editEnquiryData = () => {
-    enquiryDetails.modification_date = creationdatetime;
-    if (enquiryDetails.first_name !== '') {
+     if (enquiryDetails.first_name !== '') {
+      enquiryDetails.modification_date = creationdatetime;
+    enquiryDetails.modified_by = loggedInuser.first_name;
       api
         .post('/enquiry/editEnquiry', enquiryDetails)
         .then(() => {

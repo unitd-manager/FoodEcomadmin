@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,9 +14,11 @@ import AttachmentModalV2 from '../../components/Tender/AttachmentModalV2';
 import ComponentCard from '../../components/ComponentCard';
 import ComponentCardV2 from '../../components/ComponentCardV2';
 import ViewFileComponentV2 from '../../components/ProjectModal/ViewFileComponentV2';
+import creationdatetime from '../../constants/creationdatetime';
 import message from '../../components/Message';
 import api from '../../constants/api';
 import ContentMoreDetails from '../../components/Content/ContentMoreDetails';
+import AppContext from '../../context/AppContext';
 
 const ContentUpdate = () => {
   // All state variables
@@ -31,6 +33,7 @@ const ContentUpdate = () => {
   const [attachmentData, setDataForAttachment] = useState({
     modelType: '',
   });
+  const { loggedInuser } = useContext(AppContext);
 
   // Navigation and Parameter Constants
   const { id } = useParams();
@@ -76,6 +79,8 @@ const ContentUpdate = () => {
       contentDetails.sub_category_id !== '' &&
       contentDetails.published !== ''
     ) {
+      contentDetails.modification_date = creationdatetime;
+      contentDetails.modified_by = loggedInuser.first_name;
       api
         .post('/content/editContent', contentDetails)
         .then(() => {

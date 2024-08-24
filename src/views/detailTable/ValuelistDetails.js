@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import api from '../../constants/api';
 import message from '../../components/Message';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const ValueListDetails = () => {
   // All state variables
   const [valuelistname, setValueListName] = useState();
-  const [valuelistdetails, setValueListDetails] = useState({ key_text: '', value: '' });
+  const [valuelistdetails, setValueListDetails] = useState({ key_text: '', value: '',     creation_date: moment(),
+  });
 
   // Navigation and Parameter Constants
   const { id } = useParams();
@@ -35,10 +38,12 @@ const ValueListDetails = () => {
         message('Unable to edit record.', 'error');
       });
   };
+  const { loggedInuser } = useContext(AppContext);
 
   //Api call for Insert Valuelist Details
   const insertValueListData = () => {
     if (valuelistdetails.key_text !== '' && valuelistdetails.value !== '') {
+      valuelistdetails.created_by = loggedInuser.first_name;
       valuelistdetails.creation_date = creationdatetime;
       api
         .post('/valuelist/insertValueList', valuelistdetails)

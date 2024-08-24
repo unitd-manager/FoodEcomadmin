@@ -92,6 +92,8 @@ const UserGroupEdit = () => {
   };
   //update userGroup
   const editUserGroupData = () => {
+    userGroupDetails.modification_date = creationdatetime;
+    userGroupDetails.modified_by = loggedInuser.first_name;
     api
       .post('/usergroup/edit-usergroup', userGroupDetails)
       .then(() => {
@@ -219,7 +221,7 @@ const UserGroupEdit = () => {
             />
             <Form>
               <FormGroup>
-                <ComponentCard title="UserGroup Details">
+                <ComponentCard title="UserGroup Details" creationModificationDate={userGroupDetails}>
                   <Row>
                     <Col md="6">
                       <FormGroup>

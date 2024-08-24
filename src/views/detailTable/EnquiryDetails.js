@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import api from '../../constants/api';
 import message from '../../components/Message';
+import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const EnquiryDetails = () => {
   //All state variables
   const [enquiryForms, setEnquiryForms] = useState({
     first_name: '',
+    creation_date: moment(),
+
   });
   //Navigation and Parameters
   const navigate = useNavigate();
@@ -18,8 +23,12 @@ const EnquiryDetails = () => {
   const handleInputsenquiryForms = (e) => {
     setEnquiryForms({ ...enquiryForms, [e.target.name]: e.target.value });
   };
+  const { loggedInuser } = useContext(AppContext);
+
   //Insert Setting
   const insertEnquiry = () => {
+    enquiryForms.creation_date = creationdatetime;
+    enquiryForms.created_by = loggedInuser.first_name;
     api
       .post('/enquiry/insertEnquiry', enquiryForms)
       .then((res) => {

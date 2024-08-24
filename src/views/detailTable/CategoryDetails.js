@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import moment from 'moment';
 import message from '../../components/Message';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const CategoryDetails = () => {
   // All state variables
   const [categoryForms, setCategoryForms] = useState({
     category_title: '',
+    creation_date: moment(),
+
   });
 
   // Navigation and Parameter Constants
   const navigate = useNavigate();
 
   //All Functions/Methods
+  const { loggedInuser } = useContext(AppContext);
 
   //Setting Data in ValueList Details
   const handleInputs = (e) => {
@@ -27,6 +32,7 @@ const CategoryDetails = () => {
   //Api call for insert SubCategory Data
   const insertCategoryData = () => {
     categoryForms.creation_date = creationdatetime;
+    categoryForms.created_by = loggedInuser.first_name;
     if (categoryForms.category_title !== '') {
       api
         .post('/category/insertCategory', categoryForms)

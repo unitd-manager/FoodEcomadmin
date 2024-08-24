@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Row, Col, Form, FormGroup, Button } from 'reactstrap';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -15,6 +15,7 @@ import KeyStaffDetails from '../../components/StaffTable/KeyStaffDetails';
 import KeyStaffAddress from '../../components/StaffTable/KeyStaffAddress';
 import StaffButton from '../../components/StaffTable/StaffButton';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const StaffEdit = () => {
   // All state variables
@@ -32,10 +33,12 @@ const StaffEdit = () => {
   // Navigation and Parameter Constants
   const { id } = useParams();
   const navigate = useNavigate();
- 
+  const { loggedInuser } = useContext(AppContext);
+
+  //All Functions/Methods
+
   //Setting Data in Staff Details
   const handleInputs = (e) => {
-    console.log(e)
     setStaffEditDetails({ ...staffeditdetails, [e.target.name]: e.target.value });
   };
   //Setting Picture Data
@@ -81,6 +84,7 @@ const StaffEdit = () => {
   };
 
   //Api call for Editing Staff Details
+
   const editStaffData = () => {
     staffeditdetails.modification_date = creationdatetime;
     if (!staffeditdetails.email) {
@@ -88,8 +92,9 @@ const StaffEdit = () => {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(staffeditdetails.email)) {
       message('Enter valid email', 'warning');
     } else if (staffeditdetails.email !== '' && staffeditdetails.first_name !== '') {
-      api
-        .post('/staff/editStaff', staffeditdetails)
+      staffeditdetails.modification_date = creationdatetime;
+      staffeditdetails.modified_by = loggedInuser.first_name;
+      api.post('/staff/editStaff', staffeditdetails)
         .then(() => {
           message('Record editted successfully', 'success');
           editStaffById();
@@ -101,6 +106,7 @@ const StaffEdit = () => {
       message('Please fill all required fields', 'warning');
     }
   };
+
   //Api call for getting Staff Type From Valuelist
   const getStaffType = () => {
     api
@@ -112,6 +118,7 @@ const StaffEdit = () => {
         message('Staff Data Not Found', 'info');
       });
   };
+
   //Api call for getting Staff Team From Valuelist
   const getStaffTeam = () => {
     api
@@ -123,6 +130,7 @@ const StaffEdit = () => {
         message('Staff Data Not Found', 'info');
       });
   };
+
   //Api call for getting User Group Data
   const getUserGroup = () => {
     api
@@ -183,7 +191,6 @@ const StaffEdit = () => {
       ></StaffButton>
 
       {/* KeyStaffDetails */}
-      <BreadCrumbs heading={staffeditdetails && staffeditdetails.staff_id} />
       <KeyStaffDetails
         stafftypedetails={stafftypedetails}
         staffeditdetails={staffeditdetails}
