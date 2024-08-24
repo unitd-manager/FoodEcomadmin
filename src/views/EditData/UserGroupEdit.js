@@ -9,7 +9,7 @@ import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
 import message from '../../components/Message';
-import UserGroupButtons from '../../components/UserGroup/UserGroupButtons';
+import UserGroupButtons from '../../components/userGroup/UserGroupButtons';
 import AppContext from '../../context/AppContext';
 
 const UserGroupEdit = () => {

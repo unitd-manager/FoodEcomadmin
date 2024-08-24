@@ -27,8 +27,9 @@ const SortOrder = ({ value, tablename, idColumn, idValue }) => {
         })
         .then((res) => {
           if (res.status === 200) {
-            // window.location.reload();
             setValue(newValue);
+            //window.location.reload();
+            
           } else {
             message('Unable to edit record.', 'error');
           }

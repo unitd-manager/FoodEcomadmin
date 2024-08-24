@@ -20,12 +20,7 @@ const SubCategory = () => {
   // All state variables
   const [subcategory, setSubCategory] = useState();
   const [loading, setLoading] = useState(false)
-
-  const getSelectedLanguageFromLocalStorage = () => {
-    return localStorage.getItem('selectedLanguage') || '';
-  };
   
-  const selectedLanguage = getSelectedLanguageFromLocalStorage();
 
   // Navigation and Parameter Constants
   const { id } = useParams();
@@ -57,37 +52,11 @@ const SubCategory = () => {
     getSubCategory();
   }, [id]);
 
-  const [arabic, setArabic] = useState([]);
-
-
-  const arb =selectedLanguage === 'Arabic'
-
-  // const eng =selectedLanguage === 'English'
-   
-
-  const getTranslationForSubCategory = () => {
-      api
-      .get('/subcategory/getTranslationForSubCategory')
-      .then((res) => {
-        setArabic(res.data.data);
-      })
-      .catch(() => {
-        // Handle error if needed
-      });   
-  };
-
+  
 
   useEffect(() => {
-    getTranslationForSubCategory();
   }, []);
 
-  let genLabel = '';
-
-  if (arb === true) {
-    genLabel = 'arb_value';
-  } else {
-    genLabel = 'value';
-  }
 
   //Structure of Subcategory List view
   const columns = [
@@ -99,7 +68,7 @@ const SubCategory = () => {
       wrap: true,
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.Edit')?.[genLabel], 
+      name: 'Edit', 
       selector: 'edit',
       cell: () => <Icon.Edit2 />,
       grow: 0,
@@ -108,47 +77,47 @@ const SubCategory = () => {
       sortable: false,
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.Title')?.[genLabel],
+      name: 'Title',
       selector: 'sub_category_title',
       sortable: true,
       grow: 0,
       wrap: true,
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.Order')?.[genLabel],
+      name: 'Sort Order',
       selector: 'sort_order',
       sortable: true,
       grow: 0,
       width: 'auto',
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.SubCatChildType')?.[genLabel],
+      name: 'Type',
       selector: 'sub_category_type',
       sortable: true,
       grow: 0,
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.Section')?.[genLabel],
+      name: 'Section',
       selector: 'section_title',
       sortable: true,
       grow: 0,
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.Category')?.[genLabel],
+      name: 'Category',
       selector: 'category_title',
       sortable: true,
       grow: 2,
       width: 'auto',
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.ID')?.[genLabel], 
+      name: 'Sub Category', 
       selector: 'sub_category_id',
       sortable: true,
       grow: 2,
       wrap: true,
     },
     {
-      name: arabic.find(item => item.key_text === 'mdSubCategory.Published')?.[genLabel],
+      name: 'Published',
       selector: 'published',
       sortable: true,
       grow: 2,
@@ -163,7 +132,7 @@ const SubCategory = () => {
 
         <CommonTable
         loading={loading}
-          title={arb ? 'قائمة الفئات الفرعية': 'SubCategory List'}
+          title='SubCategory List'
           module='SubCategory'
           Button={
             <Link to="/SubCategoryDetails">
@@ -191,30 +160,30 @@ const SubCategory = () => {
                         <Icon.Edit2 />
                       </Link>
                     </td>
-                    <td>{arb && element.sub_category_title_arb ?element.sub_category_title_arb : element.sub_category_title}</td>
+                    <td>{element.sub_category_title}</td>
                     <td>
                     <SortOrder
-                       idValue={element.sub_category_id}
-                       idColumn="sub_category_id"
-                       tablename="sub_category"
-                       value={element.sort_order}>
-                    </SortOrder>
+                        idValue={element.sub_category_id}
+                        idColumn="sub_category_id"
+                        tablename="sub_category"
+                        value={element.sort_order}
+                      ></SortOrder>
                     </td>
-                    <td>{arb && element.sub_category_type_arb ?element.sub_category_type_arb : element.sub_category_type}</td>
-                    <td>{arb && element.section_title_arb ?element.section_title_arb : element.section_title}</td>
-                    <td>{arb && element.category_title_arb ?element.category_title_arb : element.category_title}</td>
+                    <td>{element.sub_category_type}</td>
+                    <td>{element.section_title}</td>
+                    <td>{element.category_title}</td>
                     <td>{element.sub_category_id}</td>
                     <td>
                     <Publish
                         idColumn="sub_category_id"
                         tablename="sub_category"
                         idValue={element.sub_category_id.toString()}
-                        value={arb && element.published_arb ?element.published_arb : element.published}
+                        value={element.published}
                       ></Publish>
                     </td>
                   </tr>
                 );
-              })}an
+              })}
           </tbody>
         </CommonTable>
       </div>
