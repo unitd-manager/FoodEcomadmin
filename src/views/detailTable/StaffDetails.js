@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Row, Col, FormGroup, Label, Button, Input } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import moment from 'moment';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import api from '../../constants/api';
 import message from '../../components/Message';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const StaffDetails = () => {
   // All state variables
 
-  const [staffdetails, setStaffDetails] = React.useState({ email: '', first_name: '' });
+  const [staffdetails, setStaffDetails] = React.useState({ email: '', first_name: '', creation_date: moment(), });
 
   // Navigation and Parameter Constants
 
@@ -23,6 +25,7 @@ const StaffDetails = () => {
   const handleInputs = (e) => {
     setStaffDetails({ ...staffdetails, [e.target.name]: e.target.value });
   };
+  const { loggedInuser } = useContext(AppContext);
 
   //Api call for Insert Staff Data
   const insertStaffData = () => {
@@ -33,6 +36,8 @@ const StaffDetails = () => {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(staffdetails.email)) {
       message('Invalid email address', 'warning');
     } else if (staffdetails.email !== '' && staffdetails.first_name !== '') {
+      staffdetails.creation_date = creationdatetime;
+      staffdetails.created_by = loggedInuser.first_name;
       api
         .post('/staff/insertStaff', staffdetails)
         .then((res) => {
@@ -106,7 +111,7 @@ const StaffDetails = () => {
                       }
                     }}
                   >
-                    Cancel
+                    Go to List
                   </Button>
                 </div>
               </Row>

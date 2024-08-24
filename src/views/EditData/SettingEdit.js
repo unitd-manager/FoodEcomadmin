@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import message from '../../components/Message';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
 import DeleteButton from '../../components/DeleteButton';
+import AppContext from '../../context/AppContext';
 
 const SettingEdit = () => {
   //All state variable
@@ -23,6 +24,8 @@ const SettingEdit = () => {
   const backToList = () => {
     navigate('/Setting');
   };
+  const { loggedInuser } = useContext(AppContext);
+
   //setting data in settingDetails
   const handleInputs = (e) => {
     setSettingDetails({ ...settingdetails, [e.target.name]: e.target.value });
@@ -43,6 +46,8 @@ const SettingEdit = () => {
   const editSettingData = () => {
     settingdetails.modification_date = creationdatetime;
     if (settingdetails.key_text !== '') {
+      settingdetails.modification_date = creationdatetime;
+      settingdetails.modified_by = loggedInuser.first_name;
       api
         .post('/setting/editSetting', settingdetails)
         .then(() => {

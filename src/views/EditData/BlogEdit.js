@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import * as Icon from 'react-feather';
@@ -19,6 +19,7 @@ import DeleteButton from '../../components/DeleteButton';
 import AttachmentModalV2 from '../../components/Tender/AttachmentModalV2';
 import ViewFileComponentV2 from '../../components/ProjectModal/ViewFileComponentV2';
 import BlogDetail from '../../components/BlogTable/BlogDetail';
+import AppContext from '../../context/AppContext';
 
 const BlogEdit = () => {
   //All state variable
@@ -31,6 +32,7 @@ const BlogEdit = () => {
   });
   const [roomName, setRoomName] = useState('');
   const [fileTypes, setFileTypes] = useState();
+  const { loggedInuser } = useContext(AppContext);
 
   //navigation and parameters
   const { id } = useParams();
@@ -75,7 +77,7 @@ const BlogEdit = () => {
   // Gettind data from category
   const editCategory = () => {
     api
-      .get('/category/getCategory')
+      .get('/category/getBlogCategory')
       .then((res) => {
         console.log(res.data.data);
         setCategory(res.data.data);
@@ -84,6 +86,7 @@ const BlogEdit = () => {
   };
   //Update blog
   const editBlogs = () => {
+    blog.modified_by = loggedInuser.first_name;
     blog.modification_date = creationdatetime;
     api
       .post('/blog/editBlog', blog)

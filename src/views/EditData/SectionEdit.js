@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Row,
   Col,
@@ -25,6 +25,7 @@ import api from '../../constants/api';
 import SectionButton from '../../components/SectionTable/SectionButton';
 import creationdatetime from '../../constants/creationdatetime';
 import SectionDetail from '../../components/SectionTable/SectionDetail';
+import AppContext from '../../context/AppContext';
 
 const SectionEdit = () => {
   //Const Variables
@@ -44,6 +45,7 @@ const SectionEdit = () => {
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+  const { loggedInuser } = useContext(AppContext);
 
   // Abi for Picture attachment
   const dataForPicture = () => {
@@ -76,6 +78,7 @@ const SectionEdit = () => {
   const editSectionData = () => {
     if (section.section_title !== '') {
       section.modification_date = creationdatetime;
+      section.modified_by = loggedInuser.first_name;
       api
         .post('/section/editSection', section)
         .then(() => {
@@ -132,11 +135,13 @@ const SectionEdit = () => {
       {/* Main Details */}
       <Form>
         <FormGroup>
+        <ComponentCard title="Section Details" creationModificationDate={section}>
         <SectionDetail
         handleInputs={handleInputs}
         section={section}
         valuelist={valuelist}
       ></SectionDetail>
+      </ComponentCard>
         </FormGroup>
       </Form>
       <ComponentCard>

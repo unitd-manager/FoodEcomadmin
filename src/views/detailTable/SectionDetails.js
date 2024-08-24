@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 import message from '../../components/Message';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const SectionDetails = () => {
   // Navigation and Parameter Constants
@@ -15,7 +17,10 @@ const SectionDetails = () => {
   //Const Variables
   const [sectionForms, setSectionForms] = useState({
     section_title: '',
+    creation_date: moment(),
   });
+  const { loggedInuser } = useContext(AppContext);
+
   //Expense Functions/Methods
   const handleSectionForms = (e) => {
     setSectionForms({ ...sectionForms, [e.target.name]: e.target.value });
@@ -24,6 +29,7 @@ const SectionDetails = () => {
   const insertSection = () => {
     if (sectionForms.section_title !== '') {
       sectionForms.created_date = creationdatetime;
+      sectionForms.created_by = loggedInuser.first_name;
       api
         .post('/section/insertSection', sectionForms)
         .then((res) => {

@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import api from '../../constants/api';
 import message from '../../components/Message';
+import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const UserGroupDetails = () => {
   const [userGroupDetails, setUserGroupDetails] = useState({
     title: '',
+    creation_date: moment(),
+
   });
   const [section, setSection] = useState([]);
+  const { loggedInuser } = useContext(AppContext);
 
   const navigate = useNavigate();
   //setting data in ProductDetails
@@ -28,6 +34,8 @@ const UserGroupDetails = () => {
 
   //Insert Product Data
   const createUserGroup = () => {
+    userGroupDetails.creation_date = creationdatetime;
+    userGroupDetails.created_by = loggedInuser.first_name;
     api
       .post('/usergroup/insertUserGroup', userGroupDetails)
       .then((res) => {

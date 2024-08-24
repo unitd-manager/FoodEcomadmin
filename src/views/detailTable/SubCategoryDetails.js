@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import moment from 'moment';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import api from '../../constants/api';
 import message from '../../components/Message';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const SubCategoryDetails = () => {
   // All state variables
   const [subcategorydetails, setSubCategoryDetails] = useState({
     sub_category_title: '',
+    creation_date: moment(),
+
   });
 
   // Navigation and Parameter Constants
   const navigate = useNavigate();
+  const { loggedInuser } = useContext(AppContext);
 
   //All Functions/Methods
 
@@ -27,6 +32,7 @@ const SubCategoryDetails = () => {
   //Api call for insert SubCategory Data
   const insertSubCategoryData = () => {
     subcategorydetails.creation_date = creationdatetime;
+    subcategorydetails.created_by = loggedInuser.first_name;
     if (subcategorydetails.sub_category_title !== '') {
       api
         .post('/subcategory/insertSubCategory', subcategorydetails)

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Row,Col, FormGroup, Label, Input } from 'reactstrap';
 import PropTypes from 'prop-types'
-import ComponentCard from '../ComponentCard';
 
 export default function SectionDetail({section,valuelist,handleInputs}) {
   SectionDetail.propTypes = {
@@ -10,7 +9,7 @@ export default function SectionDetail({section,valuelist,handleInputs}) {
         handleInputs: PropTypes.any
       }
   return (
-    <ComponentCard title="Section Details" creationModificationDate={section}>
+   
     <Row>
       <Col md="3">
         <FormGroup>
@@ -120,6 +119,5 @@ export default function SectionDetail({section,valuelist,handleInputs}) {
         </FormGroup>
       </Col>
     </Row>
-  </ComponentCard>
   )
 }

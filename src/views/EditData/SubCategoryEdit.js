@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../form-editor/editor.scss';
 import { ToastContainer } from 'react-toastify';
-import moment from 'moment';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import SubCategoryButton from '../../components/SubCategoryTable/SubCategoryButton';
 import SubCategoryEditDetails from '../../components/SubCategoryTable/SubCategoryEditDetails';
@@ -11,6 +10,7 @@ import SubCategoryPageMetaData from '../../components/SubCategoryTable/SubCatego
 import message from '../../components/Message';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const SubCategoryEdit = () => {
   // All state variables
@@ -28,6 +28,7 @@ const SubCategoryEdit = () => {
   const handleInputs = (e) => {
     setSubCategoryEditDetails({ ...subcategoryeditdetails, [e.target.name]: e.target.value });
   };
+  const { loggedInuser } = useContext(AppContext);
 
   // Route Change
   const applyChanges = () => {};
@@ -83,7 +84,9 @@ const SubCategoryEdit = () => {
 
   //Api call for Editing SubCategory Details
   const editSubCategoryData = () => {
-    subcategoryeditdetails.modification_date = moment().format('DD-MM-YYYY');
+    subcategoryeditdetails.modification_date = creationdatetime;
+    subcategoryeditdetails.modified_by = loggedInuser.first_name;
+
     if (subcategoryeditdetails.sub_category_title !== '') {
       subcategoryeditdetails.modification_date = creationdatetime;
       api

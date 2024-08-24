@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../form-editor/editor.scss';
@@ -13,6 +13,7 @@ import creationdatetime from '../../constants/creationdatetime';
 import ComponentCard from '../../components/ComponentCard';
 import AttachmentModalV2 from '../../components/Tender/AttachmentModalV2';
 import ViewFileComponentV2 from '../../components/ProjectModal/ViewFileComponentV2';
+import AppContext from '../../context/AppContext';
 
 const CategoryEdit = () => {
   //All state variables
@@ -32,6 +33,7 @@ const CategoryEdit = () => {
     });
     console.log('inside DataForAttachment');
   };
+  const { loggedInuser } = useContext(AppContext);
 
   // Button Save Apply Back List
   const applyChanges = () => {};
@@ -87,6 +89,7 @@ const CategoryEdit = () => {
   //Category Edit function
   const editCategoryData = () => {
     categoryDetails.modification_date = creationdatetime;
+    categoryDetails.modified_by = loggedInuser.first_name;
     if (categoryDetails.category_title !== '') {
       api
         .post('/category/editCategory', categoryDetails)

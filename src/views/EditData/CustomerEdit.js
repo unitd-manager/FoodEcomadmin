@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Button, Label, Input } from 'reactstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -10,10 +10,12 @@ import message from '../../components/Message';
 import api from '../../constants/api';
 import ComponentCard from '../../components/ComponentCard';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const ContentUpdate = () => {
   // All state variables
   const [contentDetails, setContentDetails] = useState();
+  const { loggedInuser } = useContext(AppContext);
 
   // Navigation and Parameter Constants
   const { id } = useParams();
@@ -46,6 +48,8 @@ const ContentUpdate = () => {
       contentDetails.sub_category_id !== '' &&
       contentDetails.published !== ''
     ) {
+      contentDetails.modification_date = creationdatetime;
+      contentDetails.modified_by = loggedInuser.first_name;
       api
         .post('/contact/editContact', contentDetails)
         .then(() => {

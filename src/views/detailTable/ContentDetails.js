@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
@@ -8,6 +8,7 @@ import ComponentCard from '../../components/ComponentCard';
 import message from '../../components/Message';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const ContentDetails = () => {
   //All const variables
@@ -30,10 +31,13 @@ const ContentDetails = () => {
       console.log(content);
     });
   };
+  const { loggedInuser } = useContext(AppContext);
+
   //Insert Content Data
   const insertContentData = () => {
     if (contentDetails.title !== '') {
       contentDetails.creation_date = creationdatetime;
+      contentDetails.created_by = loggedInuser.first_name;
       api
         .post('/content/insertContent', contentDetails)
         .then((res) => {
@@ -60,7 +64,7 @@ const ContentDetails = () => {
       <ToastContainer></ToastContainer>
       <Row>
         <Col md="6">
-          <ComponentCard title="Key Details">
+          <ComponentCard title="Key Details" >
             <Form>
               <FormGroup>
                 <Row>

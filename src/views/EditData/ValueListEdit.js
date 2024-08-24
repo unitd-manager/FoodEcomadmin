@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../form-editor/editor.scss';
@@ -9,6 +9,7 @@ import ValueListEditDetails from '../../components/ValueListTable/ValueListEditD
 import message from '../../components/Message';
 import api from '../../constants/api';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const ValueListEdit = () => {
   // All state variables
@@ -18,6 +19,7 @@ const ValueListEdit = () => {
   // Navigation and Parameter Constants
   const { id } = useParams();
   const navigate = useNavigate();
+  const { loggedInuser } = useContext(AppContext);
 
   //All Functions/Methods
   //Setting Data in ValueList Details
@@ -65,6 +67,7 @@ const ValueListEdit = () => {
   const editValueListData = () => {
     if (valuelisteditdetails.key_text !== '' && valuelisteditdetails.value !== '') {
       valuelisteditdetails.modification_date = creationdatetime;
+      valuelisteditdetails.modified_by = loggedInuser.first_name;
       api
         .post('/valuelist/editValueList', valuelisteditdetails)
         .then(() => {
