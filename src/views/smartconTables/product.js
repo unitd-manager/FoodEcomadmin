@@ -112,13 +112,13 @@ const SectionDetails = () => {
     //   grow: 2,
     //   width: 'auto',
     // },
-    {
-      name: 'Modified By',
-      selector: 'modified_by',
-      sortable: true,
-      grow: 2,
-      width: 'auto',
-    },
+    // {
+    //   name: 'Modified By',
+    //   selector: 'modified_by',
+    //   sortable: true,
+    //   grow: 2,
+    //   width: 'auto',
+    // },
     {
       name: 'Published',
       selector: 'published',
@@ -170,7 +170,7 @@ const SectionDetails = () => {
                     <td>{element.unit}</td>
                     <td>{element.price}</td>
                     {/* <td>{element.qty_in_stock}</td> */}
-                    <td>{element.modified_by}</td>
+                    {/* <td>{element.modified_by}</td> */}
                     <td>
                       <Publish
                         idColumn="product_id"

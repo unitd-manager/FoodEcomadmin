@@ -26,6 +26,7 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
                     onChange={handleInputs}
                     value={productDetails && productDetails.product_code}
                     name="product_code"
+                    disabled
                   />
                 </FormGroup>
               </Col>
@@ -79,7 +80,7 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
               </Col>
             </Row>
             <Row>
-              <Col md="3">
+              {/* <Col md="3">
                 <FormGroup>
                   <Label> Quantity in Stock </Label>
                   <Input
@@ -89,7 +90,7 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
                     name="qty_in_stock"
                   />
                 </FormGroup>
-              </Col>
+              </Col> */}
               <Col md="3">
                 <FormGroup>
                   <Label> List Price </Label>
@@ -114,15 +115,21 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
               </Col>
               <Col md="3">
                 <FormGroup>
-                  <Label> Unit </Label>
+                  <Label>Unit</Label>
                   <Input
-                    type="text"
-                    onChange={handleInputs}
+                    type="select"
                     value={productDetails && productDetails.unit}
                     name="unit"
-                  />
+                    onChange={handleInputs}
+                  >
+                    <option defaultValue="selected">Please Select</option>
+                    <option value="Box">Box</option>
+                    <option value="Pic">Pic</option>
+                    <option value="Kg">Kg</option>
+                  </Input>
                 </FormGroup>
               </Col>
+ 
               <Col md="3">
                 <FormGroup>
                   <Label> Short Description </Label>
