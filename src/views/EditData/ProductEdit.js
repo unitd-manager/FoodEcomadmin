@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Form, FormGroup, Button, TabContent, NavItem, NavLink, Nav, TabPane } from 'reactstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Editor } from 'react-draft-wysiwyg';
@@ -16,8 +16,8 @@ import ProductEditButtons from '../../components/Product/ProductEditButtons';
 import ViewFileComponentV2 from '../../components/ProjectModal/ViewFileComponentV2';
 import AttachmentModalV2 from '../../components/Tender/AttachmentModalV2';
 import ProductDetail from '../../components/ProductTable/ProductDetail';
-// import ProductColor from '../../components/ProductTable/ProductColor';
-// import ProductSize from '../../components/ProductTable/ProductSize';
+import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const ProductUpdate = () => {
   // All state variables
@@ -34,6 +34,7 @@ const ProductUpdate = () => {
   // Navigation and Parameter Constants
   const { id } = useParams();
   const navigate = useNavigate();
+  const { loggedInuser } = useContext(AppContext);
 
   //Setting data in productDetails
   const handleInputs = (e) => {
@@ -74,6 +75,8 @@ const ProductUpdate = () => {
   //Edit Product
   const editProductData = () => {
     if (productDetails.title !== '') {
+      productDetails.modification_date = creationdatetime;
+      productDetails.modified_by = loggedInuser.first_name;
       api
         .post('/product/edit-Product', productDetails)
         .then(() => {

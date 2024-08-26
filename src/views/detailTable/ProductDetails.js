@@ -3,6 +3,7 @@ import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import ComponentCard from '../../components/ComponentCard';
 import message from '../../components/Message';
@@ -15,6 +16,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const [productDetails, setProductDetails] = useState({
     title: '',
+    creation_date: moment(),
   });
   //setting data in ProductDetails
   const handleInputs = (e) => {
