@@ -1,5 +1,5 @@
 import { Row, Col } from 'reactstrap';
-import Content from '../smartconTables/Content';
+import Product from '../smartconTables/product';
 
 
 const Classic = () => {
@@ -8,7 +8,7 @@ const Classic = () => {
       {/*********************Sales Overview ************************/}
       <Row>
         <Col lg="12">
-          <Content />
+          <Product />
         
         </Col>
       </Row>
