@@ -72,8 +72,8 @@ const SectionDetails = () => {
     },
 
     {
-      name: 'Item Code',
-      selector: 'item_code',
+      name: 'Product Code',
+      selector: 'product_code',
       sortable: true,
       grow: 0,
       wrap: true,
@@ -164,7 +164,7 @@ const SectionDetails = () => {
                         <Icon.Edit2 />
                       </Link>
                     </td>
-                    <td>{element.item_code}</td>
+                    <td>{element.product_code}</td>
                     <td>{element.title}</td>
                     <td>{element.product_type}</td>
                     <td>{element.unit}</td>

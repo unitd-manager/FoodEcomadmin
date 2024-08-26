@@ -20,7 +20,7 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
             <Row>
               <Col md="3">
                 <FormGroup>
-                  <Label> Item code </Label>
+                  <Label> Product code </Label>
                   <Input
                     type="text"
                     onChange={handleInputs}
