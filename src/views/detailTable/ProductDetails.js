@@ -23,10 +23,10 @@ const ProductDetails = () => {
   //get staff details
   const { loggedInuser } = useContext(AppContext);
   //Insert Product Data
-  const insertProductData = (ProductCode, ItemCode) => {
+  const insertProductData = (ProductCode) => {
+    console.log('ProductCode',ProductCode)
     if (productDetails.title.trim() !== '') {
-      productDetails.product_code = ProductCode;
-      productDetails.item_code = ItemCode;
+      productDetails.product_code = ProductCode ;
       productDetails.creation_date = creationdatetime;
       productDetails.created_by = loggedInuser.first_name;
       api
@@ -67,13 +67,11 @@ const ProductDetails = () => {
   //Auto generation code
   const generateCode = () => {
     api
-      .post('/product/getCodeValue', { type: 'ProductCode' })
+      .post('/commonApi/getCodeValues', { type: 'product' })
       .then((res) => {
         const ProductCode = res.data.data;
-        api.post('/product/getCodeValue', { type: 'ItemCode' }).then((response) => {
-          const ItemCode = response.data.data;
-          insertProductData(ProductCode, ItemCode);
-        });
+       console.log('ProductCode',ProductCode)
+          insertProductData(ProductCode);
       })
       .catch(() => {
         insertProductData('');

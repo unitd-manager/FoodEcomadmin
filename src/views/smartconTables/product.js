@@ -27,7 +27,7 @@ const SectionDetails = () => {
   // get section
   const getSection = () => {
     api
-      .get('/product/getProducts')
+      .get('/product/getProductAdmin')
       .then((res) => {
         setSection(res.data.data);
         $('#example').DataTable({
