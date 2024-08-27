@@ -52,8 +52,8 @@ export default function FinanceDeliveryAddress({ financeDetails, handleInputs })
                   <Input
                     type="text"
                     onChange={handleInputs}
-                    value={financeDetails && financeDetails.shipping_address_country}
-                    name="shipping_address_country"
+                    value={financeDetails && financeDetails.shipping_address_country_code}
+                    name="shipping_address_country_code"
                   />
                 </FormGroup>
               </Col>

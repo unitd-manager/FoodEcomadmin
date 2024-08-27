@@ -80,9 +80,9 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
               </Col>
             </Row>
             <Row>
-              {/* <Col md="3">
+              <Col md="3">
                 <FormGroup>
-                  <Label> Quantity in Stock </Label>
+                  <Label> Quantity in Stock</Label>
                   <Input
                     type="text"
                     onChange={handleInputs}
@@ -90,7 +90,7 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
                     name="qty_in_stock"
                   />
                 </FormGroup>
-              </Col> */}
+              </Col>
               <Col md="3">
                 <FormGroup>
                   <Label> List Price </Label>
