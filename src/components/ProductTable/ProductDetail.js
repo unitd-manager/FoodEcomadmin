@@ -88,6 +88,7 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
                     onChange={handleInputs}
                     value={productDetails && productDetails.qty_in_stock}
                     name="qty_in_stock"
+                    disabled
                   />
                 </FormGroup>
               </Col>
@@ -124,7 +125,7 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
                   >
                     <option defaultValue="selected">Please Select</option>
                     <option value="Box">Box</option>
-                    <option value="Pic">Pic</option>
+                    <option value="Piece">Piece</option>
                     <option value="Kg">Kg</option>
                   </Input>
                 </FormGroup>

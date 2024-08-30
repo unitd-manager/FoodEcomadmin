@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Form } from 'reactstrap';
+import React, { useContext, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'datatables.net-dt/js/dataTables.dataTables';
@@ -11,15 +10,12 @@ import 'datatables.net-buttons/js/buttons.print';
 import { useParams } from 'react-router-dom';
 import api from '../../constants/api';
 import message from '../../components/Message';
-import ComponentCard from '../../components/ComponentCard';
 import InventoryEditPart from '../../components/Inventory/InventoryEditPart';
-import InventoryEditTables from '../../components/Inventory/InventoryEditTables';
 import creationdatetime from '../../constants/creationdatetime';
+import AppContext from '../../context/AppContext';
 
 const Test = () => {
-  //state variables
-  const [tabPurchaseOrdersLinked, setTabPurchaseOrdersLinked] = useState([]);
-  const [productQty, setProductQty] = useState({});
+  // State variables
   const [inventoryDetails, setInventoryDetails] = useState({
     inventory_code: '',
     inventory_id: '',
@@ -32,41 +28,34 @@ const Test = () => {
     unit: '',
     notes: '',
     product_code: '',
+    current_stock: '', // Assuming this is the field you're updating
   });
 
-  //params and routing
+  // Params and routing
   const { id } = useParams();
+  const { loggedInuser } = useContext(AppContext);
 
-  //handle input change
+  // Handle input change
   const handleInputs = (e) => {
     setInventoryDetails({ ...inventoryDetails, [e.target.name]: e.target.value, inventory_id: id });
   };
-  //get data for purchaseorder table
-  const getAllpurchaseOrdersLinked = () => {
-    api
-      .post('/inventory/gettabPurchaseOrderLinkedById', { product_id: id })
-      .then((res) => {
-        setTabPurchaseOrdersLinked(res.data.data);
-      })
-      .catch(() => {
-        message('Unable to get purchase order data.', 'error');
-      });
+ // Update product quantity in stock
+ const updateProductQuantity = () => {
+  const productUpdateData = {
+    product_id: inventoryDetails.productId, // Assuming product_id is the same as productId
+    qty_in_stock: inventoryDetails.current_stock, // Updating quantity_in_stock with current_stock value
   };
-  //get data for projects table
-  
 
-  //get product purchasedquantity and sold qty
-  const getproductquantity = () => {
-    api
-      .post('/inventory/getProductQuantity', { product_id: id })
-      .then((res) => {
-        setProductQty(res.data.data[0]);
-      })
-      .catch(() => {
-        message('Unable to get productqty data.', 'error');
-      });
-  };
-  //get inventoryby product id
+  api
+    .post('/product/editInventoryProduct', productUpdateData)
+    .then(() => {
+      message('Product quantity updated successfully', 'success');
+    })
+    .catch(() => {
+      message('Unable to update product quantity.', 'error');
+    });
+};
+  // Get inventory by product id
   const getInventoryData = () => {
     api
       .post('/inventory/getinventoryById', { productId: id })
@@ -77,73 +66,41 @@ const Test = () => {
         message('Unable to get inventory data.', 'error');
       });
   };
-  //update Inventory
+
+  // Update Inventory
   const editinventoryData = () => {
     inventoryDetails.modification_date = creationdatetime;
-
+    inventoryDetails.modified_by = loggedInuser.first_name;
     api
       .post('/inventory/editinventoryMain', inventoryDetails)
       .then(() => {
-        message('Record editted successfully', 'success');
-        setTimeout(() => {
-          window.location.reload();
-        }, 300);
+        // Successfully updated inventory, now update the product table
+        updateProductQuantity();
+        message('Record edited successfully', 'success');
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 300);
       })
       .catch(() => {
         message('Unable to edit record.', 'error');
       });
   };
 
+ 
+
   useEffect(() => {
     getInventoryData();
-    getAllpurchaseOrdersLinked();
-    getproductquantity(id);
   }, [id]);
 
   return (
-      <>
-        <ToastContainer></ToastContainer>
-        <InventoryEditPart
-          inventoryDetails={inventoryDetails}
-          handleInputs={handleInputs}
-          editinventoryData={editinventoryData}
-        />
-        <Row>
-          <Form>
-            <ComponentCard title="Stock Details">
-              <Row>
-                <Col xs="12" md="4">
-                  <Row>
-                    <h5>Total Purchased quantity</h5>
-                  </Row>
-                  <span>{productQty && productQty.materials_purchased}</span>
-                  <Row></Row>
-                </Col>
-                <Col xs="12" md="4">
-                  <Row>
-                    <h5>Sold quantity</h5>
-                  </Row>
-                  <span>{productQty && productQty.materials_used}</span>
-                  <Row></Row>
-                </Col>
-                <Col xs="12" md="4">
-                  <Row>
-                    <h5>Remaining quantity</h5>
-                  </Row>
-                  <span>
-                    {productQty && productQty.materials_purchased - productQty.materials_used}
-                  </span>
-                  <Row></Row>
-                </Col>
-              </Row>
-            </ComponentCard>
-          </Form>
-        </Row>
-        <InventoryEditTables
-          tabPurchaseOrdersLinked={tabPurchaseOrdersLinked}
-      
-        />
-      </>
+    <>
+      <ToastContainer />
+      <InventoryEditPart
+        inventoryDetails={inventoryDetails}
+        handleInputs={handleInputs}
+        editinventoryData={editinventoryData}
+      />
+    </>
   );
 };
 

@@ -151,7 +151,12 @@ const SectionDetails = () => {
                         <Icon.Edit2 />
                       </Link>
                     </td>
-                    <td>{element.product_code}</td>
+                    
+                    <td>
+                    <Link to={`/InventoryEdit/${element.inventory_id}`}>
+                      {element.product_code}
+                      </Link>
+                    </td>
                     <td>{element.title}</td>
                     <td>{element.product_type}</td>
                     <td>{element.unit}</td>

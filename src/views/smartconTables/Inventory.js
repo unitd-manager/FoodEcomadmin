@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import * as Icon from 'react-feather';
-import { Input, Button, Row, Col } from 'reactstrap';
+import { Input, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'datatables.net-dt/js/dataTables.dataTables';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
-import $ from 'jquery';
 import 'datatables.net-buttons/js/buttons.colVis';
 import 'datatables.net-buttons/js/buttons.flash';
 import 'datatables.net-buttons/js/buttons.html5';
@@ -102,24 +101,6 @@ function Inventory() {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      $('#example').DataTable({
-        pagingType: 'full_numbers',
-        pageLength: 20,
-        processing: true,
-        dom: 'Bfrtip',
-        buttons: [
-          {
-            extend: 'print',
-            text: 'Print',
-            className: 'shadow-none btn btn-primary',
-          },
-        ],
-        searching: true,
-      });
-    }, 1000);
-  }, []);
-  useEffect(() => {
     getAllinventories();
   }, []);
 
@@ -132,29 +113,7 @@ function Inventory() {
         <CommonTable
           loading={loading}
           title="Inventory List"
-          Button={
-            <>
-              <Row>
-                <Col md="6">
-                  <Link to="">
-                    <Button color="primary" className="shadow-none mr-2">
-                      Import
-                    </Button>
-                  </Link>
-                </Col>
-                <Col md="6">
-                  <a
-                    href="http://43.228.126.245/smartco-api/storage/excelsheets/Inventory.xlsx"
-                    download
-                  >
-                    <Button color="primary" className="shadow-none">
-                      Sample
-                    </Button>
-                  </a>
-                </Col>
-              </Row>
-            </>
-          }
+      
         >
           <thead>
             <tr>
@@ -176,10 +135,13 @@ function Inventory() {
                     </td>
                     <td>{element.inventory_code}</td>
                     <td>{element.product_name}</td>
-                    <td>{element.product_type}</td>
-                    <td>{element.item_code}</td>
+                    <td>
+                    <Link to={`/productEdit/${element.productId}`}>
+                      {element.product_code}
+                      </Link>
+                      </td>
                     <td>{element.unit}</td>
-                    <td>{element.stock}</td>
+                    <td>{element.current_stock}</td>
                     {stockinputOpen && stockChangeId === element.inventory_id ? (
                       <td>
                         {' '}

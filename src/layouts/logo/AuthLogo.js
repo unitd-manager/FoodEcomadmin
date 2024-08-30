@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import  MainLogo from '../../assets/images/logos/logo.png';
+import  MainLogo from '../../assets/images/logos/PearlFoodChainLogo.png';
 
 const AuthLogo = () => {
   return (

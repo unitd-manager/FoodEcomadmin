@@ -1,10 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
-
 import React, { lazy } from 'react';
 import Loadable from '../layouts/loader/Loadable';
-
 import UserToken from '../components/UserToken';
-// import { Details } from '@material-ui/icons';
 
 const FullLayout = Loadable(lazy(() => import('../layouts/FullLayout')));
 /***** Pages ****/
@@ -14,13 +11,10 @@ const EditCostingSummaryModal = Loadable(
   lazy(() => import('../components/Tender/EditCostingSummaryModal')),
 );
 const EnquiryTable = Loadable(lazy(() => import('../views/smartconTables/Enquiry')));
-
 const EditQuoteModal = Loadable(lazy(() => import('../components/Tender/EditQuoteModal')));
 const EditLineItemModal = Loadable(lazy(() => import('../components/Tender/EditLineItemModal')));
-
 const PdfData = Loadable(lazy(() => import('../views/smartconTables/Tickets')));
 const PdfNext = Loadable(lazy(() => import('../views/smartconTables/GeneratePdf')));
-
 const TicketsComponent = Loadable(lazy(() => import('../views/smartconTables/TicketsComponent')));
 const Classic = Loadable(lazy(() => import('../views/dashboards/Cubosale')));
 const Crypto = Loadable(lazy(() => import('../views/dashboards/Crypto')));
@@ -30,6 +24,7 @@ const Extra = Loadable(lazy(() => import('../views/dashboards/Extra')));
 const About = Loadable(lazy(() => import('../views/About')));
 
 /***** Apps ****/
+
 const Notes = Loadable(lazy(() => import('../views/apps/notes/Notes')));
 const Chat = Loadable(lazy(() => import('../views/apps/chat/Chat')));
 const Contacts = Loadable(lazy(() => import('../views/apps/contacts/Contacts')));

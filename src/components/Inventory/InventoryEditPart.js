@@ -72,26 +72,7 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
 
             <ComponentCard
               title="Product Details"
-              righttitle={
-                <Row>
-                  <Col className="fs-10 small">
-                    <small>Creation :</small>
-                    <small>
-                      {inventoryDetails && inventoryDetails.created_by}
-                      {inventoryDetails && inventoryDetails.creation_date}
-                    </small>
-                  </Col>
-
-                  <Col className="fs-10 small">
-                    <small>Modification :</small>
-
-                    <small>
-                      {inventoryDetails && inventoryDetails.modified_by}
-                      {inventoryDetails && inventoryDetails.modification_date}
-                    </small>
-                  </Col>
-                </Row>
-              }
+              creationModificationDate={inventoryDetails}
             >
               <Row>
                 <Col md="3">
@@ -133,8 +114,8 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
                     <Label>Item Code</Label>
                     <Input
                       type="text"
-                      value={inventoryDetails && inventoryDetails.item_code}
-                      name="item_code"
+                      value={inventoryDetails && inventoryDetails.product_code}
+                      name="product_code"
                       disabled
                     />
                   </FormGroup>
@@ -148,7 +129,7 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
                       type="text"
                       value={inventoryDetails && inventoryDetails.unit}
                       name="unit"
-                      disabled
+                      
                     />
                   </FormGroup>
                 </Col>
@@ -160,6 +141,17 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
                       defaultValue={inventoryDetails && inventoryDetails.minimum_order_level}
                       onChange={handleInputs}
                       name="minimum_order_level"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col md="3">
+                  <FormGroup>
+                    <Label>Current Stock</Label>
+                    <Input
+                      type="text"
+                      defaultValue={inventoryDetails && inventoryDetails.current_stock}
+                      onChange={handleInputs}
+                      name="current_stock"
                     />
                   </FormGroup>
                 </Col>

@@ -31,45 +31,40 @@ export const columns = [
       selector: "code",
       sortable: true
     },
+   
     {
       id:5,
-      name: "Product Type",
-      selector: "project",
+      name: "Item Code",
+      selector: "ref",
       sortable: true,
       cell: d => <span>{d.closing.join(", ")}</span>
     },
     {
       id:6,
-      name: "Item Code",
-      selector: "ref",
-      sortable: true
-    },
-    {
-      id:7,
       name: "UOM",
       selector: "ref",
       sortable: true
     },
     {
-      id:8,
+      id:7,
       name: "Stock",
       selector: "ref",
       sortable: true
     },
     {
-      id:9,
+      id:8,
       name: "Adjust Stock",
       selector: "ref",
       sortable: true
     },
     {
-      id:10,
+      id:9,
       name: "",
       selector: "ref",
       sortable: true
     },
     {
-      id:11,
+      id:10,
       name: "MOL",
       selector: "minimum_order_level",
       sortable: true
