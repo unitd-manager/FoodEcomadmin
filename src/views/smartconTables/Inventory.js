@@ -135,6 +135,9 @@ function Inventory() {
         Unit: rows[x][4],
         Category: rows[x][5],
         Stock: rows[x][6],
+        FirstImage: rows[x][7],
+        SecondImage: rows[x][8],
+        ThirdImage: rows[x][9],
       });
     }
 

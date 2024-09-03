@@ -24,14 +24,14 @@ const Sidebar = () => {
 
   useEffect(() => {
     api.get('/section/getSectionForSidemenu').then((res) => {
-      const arrayOfObj = Object.entries(res.data.data).map((e) => ({ id: e[0], data: e[1] }));
+      const arrayOfObj = Object.entries(res.data.data)?.map((e) => ({ id: e[0], data: e[1] }));
       setMenu(arrayOfObj);
     });
   }, []);
 
   return (
     <div className={`sidebarBox shadow bg-${activeBg} ${isFixed ? 'fixedSidebar' : ''}`}>
-       <SimpleBar style={{ height: '100%' }}>
+      <SimpleBar style={{ height: '100%' }}>
         {/********Logo*******/}
         <div className="d-flex p-3 align-items-center" style={{display:'flex'}}>
         <div style={{display:'flex',flex:0.1}}>
@@ -57,7 +57,7 @@ const Sidebar = () => {
                   let hasPermit = false;
                   let count = 0;
                   for (let x= 0; x < navi.data.length; x++) {
-                    if (permissions.includes(`${navi.data[x].section_title}-list`)) {
+                    if (permissions?.includes(`${navi.data[x].section_title}-list`)) {
                       count = count + 1;
                       hasPermit = true;
                     }
