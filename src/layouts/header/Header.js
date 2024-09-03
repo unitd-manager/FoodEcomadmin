@@ -1,24 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import SimpleBar from 'simplebar-react';
+// import SimpleBar from 'simplebar-react';
 import {
   Navbar,
-  Nav,
-  NavItem,
-  NavbarBrand,
+  // Nav,
+  // NavItem,
+  // NavbarBrand,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
+  // DropdownItem,
   Button,
+  Label
 } from 'reactstrap';
-import { MessageSquare } from 'react-feather';
-import * as Icon from 'react-feather';
-import { ReactComponent as LogoWhite } from '../../assets/images/logos/logo.svg';
-import MessageDD from './MessageDD';
-import MegaDD from './MegaDD';
-import NotificationDD from './NotificationDD';
+// import { MessageSquare } from 'react-feather';
+// import * as Icon from 'react-feather';
+// import LogoWhite from '../../assets/images/logos/logo.png';
+// import MessageDD from './MessageDD';
+// import MegaDD from './MegaDD';
+// import NotificationDD from './NotificationDD';
 import user1 from '../../assets/images/users/user1.jpg';
 
 import { ToggleMiniSidebar, ToggleMobileSidebar } from '../../store/customizer/CustomizerSlice';
@@ -34,6 +35,7 @@ const Header = () => {
       window.location.reload()
     },200)
   }
+
   return (
     <Navbar
       color={topbarColor}
@@ -53,9 +55,10 @@ const Header = () => {
         >
           <i className="bi bi-list" />
         </Button>
-        <NavbarBrand href="/" className="d-sm-block d-lg-none">
-          <LogoWhite />
-        </NavbarBrand>
+        {/* <NavbarBrand href="/" className="d-sm-block d-lg-none">
+        <img src={LogoWhite} alt="Logo" className='w-50' />
+          {/* <LogoWhite /> */}
+        {/* </NavbarBrand> */}
         <Button
           color={topbarColor}
           className="d-sm-block d-lg-none"
@@ -69,7 +72,7 @@ const Header = () => {
       {/**********Left Nav Bar**********/}
       {/******************************/}
 
-      <Nav className="me-auto d-none d-lg-flex" navbar>
+      {/* <Nav className="me-auto d-none d-lg-flex" navbar> */}
         {/* <NavItem>
           <Link to="/starter" className="nav-link">
             Starter
@@ -77,12 +80,10 @@ const Header = () => {
         </NavItem> */}
        
         
-        <NavItem>
-          <Link to="/about" className="nav-link">
-            About
-          </Link>
-        </NavItem>
-      </Nav>
+          <Label className='text-white'>
+            FoodEcomAdmin
+          </Label>
+      {/* </Nav> */}
       {/******************************/}
       {/**********Notification DD**********/}
       {/******************************/}
@@ -90,7 +91,7 @@ const Header = () => {
         {/******************************/}
         {/**********Mega DD**********/}
         {/******************************/}
-        <UncontrolledDropdown className="mega-dropdown mx-1">
+        {/* <UncontrolledDropdown className="mega-dropdown mx-1">
           <DropdownToggle className="bg-transparent border-0" color={topbarColor}>
             <Icon.Grid size={18} />
           </DropdownToggle>
@@ -109,38 +110,38 @@ const Header = () => {
             <DropdownItem divider />
             <SimpleBar style={{ maxHeight: '350px' }}>
               <NotificationDD />
-            </SimpleBar>
-            <DropdownItem divider />
+            </SimpleBar> */}
+            {/* <DropdownItem divider />
             <div className="p-2 px-3">
               <Button color="primary" size="sm" block>
                 Check All
               </Button>
             </div>
           </DropdownMenu>
-        </UncontrolledDropdown>
+        </UncontrolledDropdown> */}
         {/******************************/}
         {/**********Message DD**********/}
         {/******************************/}
-        <UncontrolledDropdown className="mx-1">
+        {/* <UncontrolledDropdown className="mx-1">
           <DropdownToggle color={topbarColor}>
             <MessageSquare size={18} />
-          </DropdownToggle>
-          <DropdownMenu className="ddWidth">
+          </DropdownToggle> */}
+          {/* <DropdownMenu className="ddWidth">
             <DropdownItem header>
               <span className="mb-0">Messages</span>
-            </DropdownItem>
-            <DropdownItem divider />
+            </DropdownItem> */}
+            {/* <DropdownItem divider />
             <SimpleBar style={{ maxHeight: '350px' }}>
               <MessageDD />
             </SimpleBar>
-            <DropdownItem divider />
-            <div className="p-2 px-3">
+            <DropdownItem divider /> */}
+            {/* <div className="p-2 px-3">
               <Button color="primary" size="sm" block>
                 Check All
               </Button>
-            </div>
-          </DropdownMenu>
-        </UncontrolledDropdown>
+            </div> */}
+          {/* </DropdownMenu> */}
+        {/* </UncontrolledDropdown> */}
         {/******************************/}
         {/**********Profile DD**********/}
         {/******************************/}
@@ -151,7 +152,7 @@ const Header = () => {
           <DropdownMenu className="ddWidth">
             <ProfileDD />
             <div className="p-2 px-3">
-              <Button color="danger" onClick={logout} size="sm">
+              <Button onClick={logout} color="danger" size="sm">
                 Logout
               </Button>
             </div>
