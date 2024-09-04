@@ -130,7 +130,7 @@ function Inventory() {
       arr.push({
         ProductCode: rows[x][0],
         ProductName: rows[x][1],
-        Description: rows[x][2],
+        AlternativeProductName: rows[x][2],
         Price: rows[x][3],
         Unit: rows[x][4],
         Category: rows[x][5],
@@ -138,6 +138,9 @@ function Inventory() {
         FirstImage: rows[x][7],
         SecondImage: rows[x][8],
         ThirdImage: rows[x][9],
+        Keyword: rows[x][10],
+        Brand: rows[x][11],
+        Gst: rows[x][12],
       });
     }
 
