@@ -144,12 +144,45 @@ export default function ProductDetail({ productDetails, handleInputs,categoryLin
               </Col>
               <Col md="3">
                 <FormGroup>
+                  <Label> Brand </Label>
+                  <Input
+                    type="text"
+                    onChange={handleInputs}
+                    value={productDetails && productDetails.brand}
+                    name="brand"
+                  />
+                </FormGroup>
+              </Col>
+              <Col md="3">
+                <FormGroup>
+                  <Label>Gst</Label>
+                  <Input
+                    type="text"
+                    onChange={handleInputs}
+                    value={productDetails && productDetails.gst}
+                    name="gst"
+                  />
+                </FormGroup>
+              </Col>
+              <Col md="3">
+                <FormGroup>
                   <Label>Description </Label>
                   <Input
                     type="textarea"
                     onChange={handleInputs}
                     value={productDetails && productDetails.description}
                     name="description"
+                  />
+                </FormGroup>
+              </Col>
+              <Col md="3">
+                <FormGroup>
+                  <Label>Keyword search</Label>
+                  <Input
+                    type="textarea"
+                    onChange={handleInputs}
+                    value={productDetails && productDetails.keyword_search}
+                    name="keyword_search"
                   />
                 </FormGroup>
               </Col>
