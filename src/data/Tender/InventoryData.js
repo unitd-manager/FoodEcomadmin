@@ -19,12 +19,12 @@ export const columns = [
       wrap: true
     },
    
-    {
-      id:3,
-      name: "Inventory Code",
-      selector: "code",
-      sortable: true
-    },
+    // {
+    //   id:3,
+    //   name: "Inventory Code",
+    //   selector: "code",
+    //   sortable: true
+    // },
     {
       id:4,
       name: "Name",
@@ -34,7 +34,7 @@ export const columns = [
    
     {
       id:5,
-      name: "Item Code",
+      name: "Product Code",
       selector: "ref",
       sortable: true,
       cell: d => <span>{d.closing.join(", ")}</span>
@@ -51,18 +51,18 @@ export const columns = [
       selector: "ref",
       sortable: true
     },
-    {
-      id:8,
-      name: "Adjust Stock",
-      selector: "ref",
-      sortable: true
-    },
-    {
-      id:9,
-      name: "",
-      selector: "ref",
-      sortable: true
-    },
+    // {
+    //   id:8,
+    //   name: "Adjust Stock",
+    //   selector: "ref",
+    //   sortable: true
+    // },
+    // {
+    //   id:9,
+    //   name: "",
+    //   selector: "ref",
+    //   sortable: true
+    // },
     {
       id:10,
       name: "MOL",

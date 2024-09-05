@@ -75,7 +75,7 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
               creationModificationDate={inventoryDetails}
             >
               <Row>
-                <Col md="3">
+                {/* <Col md="3">
                   <FormGroup>
                     <Label>Inventory Code</Label>
                     <Input
@@ -85,7 +85,7 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
                       disabled
                     />
                   </FormGroup>
-                </Col>
+                </Col> */}
                 <Col md="3">
                   <FormGroup>
                     <Label>Product Name</Label>
@@ -111,13 +111,24 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
                 </Col>
                 <Col md="3">
                   <FormGroup>
-                    <Label>Item Code</Label>
+                    <Label>Product Code</Label>
                     <Input
                       type="text"
                       value={inventoryDetails && inventoryDetails.product_code}
                       name="product_code"
                       disabled
                     />
+                  </FormGroup>
+                </Col>
+                <Col md="3">
+                  <FormGroup>
+                    <Label>Notes</Label>
+                    <Input
+                      onChange={handleInputs}
+                      type="textarea"
+                      defaultValue={inventoryDetails && inventoryDetails.notes}
+                      name="notes"
+                    ></Input>
                   </FormGroup>
                 </Col>
               </Row>
@@ -155,17 +166,7 @@ function InventoryEditPart({ inventoryDetails, handleInputs, editinventoryData }
                     />
                   </FormGroup>
                 </Col>
-                <Col md="3">
-                  <FormGroup>
-                    <Label>Notes</Label>
-                    <Input
-                      onChange={handleInputs}
-                      type="textarea"
-                      defaultValue={inventoryDetails && inventoryDetails.notes}
-                      name="notes"
-                    ></Input>
-                  </FormGroup>
-                </Col>
+                
               </Row>
             </ComponentCard>
           </FormGroup>

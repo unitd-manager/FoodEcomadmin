@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as Icon from 'react-feather';
-import { Input, Button, Row, Col } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'datatables.net-dt/js/dataTables.dataTables';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
@@ -10,39 +10,39 @@ import 'datatables.net-buttons/js/buttons.html5';
 import 'datatables.net-buttons/js/buttons.print';
 import $ from 'jquery';
 import readXlsxFile from 'read-excel-file';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import api from '../../constants/api';
 import message from '../../components/Message';
 import { columns } from '../../data/Tender/InventoryData';
 import BreadCrumbs from '../../layouts/breadcrumbs/BreadCrumbs';
 import CommonTable from '../../components/CommonTable';
-import ViewAdjustStockHistoryModal from '../../components/Inventory/ViewAdjustStockHistoryModal';
+// import ViewAdjustStockHistoryModal from '../../components/Inventory/ViewAdjustStockHistoryModal';
 
 function Inventory() {
   //statevariables
-  const [stockinputOpen, setStockinputOpen] = useState(false);
+  // const [stockinputOpen, setStockinputOpen] = useState(false);
   const [inventories, setInventories] = useState([]);
-  const [modalId, setModalId] = useState(null);
-  const [adjustStockHistoryModal, setAdjustStockHistoryModal] = useState(false);
-  const [stockChangeId, setStockChangeId] = useState();
-  const [inventoryStock, setInventoryStock] = useState({
-    inventory_id: null,
-    stock: null,
-  });
+  // const [modalId, setModalId] = useState(null);
+  // const [adjustStockHistoryModal, setAdjustStockHistoryModal] = useState(false);
+  // const [stockChangeId, setStockChangeId] = useState();
+  // const [inventoryStock, setInventoryStock] = useState({
+  //   inventory_id: null,
+  //   stock: null,
+  // });
   const [loading, setLoading] = useState(false);
 
-  const [adjuststockDetails, setAdjuststockDetails] = useState({
-    inventory_id: null,
-    product_id: null,
-    adjust_stock: 0,
-    modified_by: '',
-    created_by: '',
-    current_stock: null,
-  });
-  //navigate
-  const navigate = useNavigate();
-  // Get All inventories
+  // const [adjuststockDetails, setAdjuststockDetails] = useState({
+  //   inventory_id: null,
+  //   product_id: null,
+  //   adjust_stock: 0,
+  //   modified_by: '',
+  //   created_by: '',
+  //   current_stock: null,
+  // });
+  // //navigate
+  // const navigate = useNavigate();
+  // // Get All inventories
   const getAllinventories = () => {
     setLoading(false);
     api
@@ -56,51 +56,71 @@ function Inventory() {
         setLoading(false);
       });
   };
-  //handle change
-  const handleStockinput = (e, element) => {
-    setInventoryStock({
-      inventory_id: element.inventory_id,
-      stock: e.target.value,
-    });
-    inventoryStock.inventory_id = element.inventory_id;
-    inventoryStock.stock = e.target.value;
-    const adjustStock = parseFloat(inventoryStock.stock) - parseFloat(element.stock);
 
-    setAdjuststockDetails({
-      inventory_id: element.inventory_id,
-      product_id: element.productId,
-      adjust_stock: adjustStock,
-      modified_by: '',
-      created_by: '',
-      current_stock: element.stock,
-    });
-  };
-  //adjust stock
-  const adjuststock = () => {
-    api
-      .post('/inventory/insertadjust_stock_log', adjuststockDetails)
-      .then(() => {
-        message('Stock updated successfully', 'success');
-        getAllinventories();
-        navigate('/inventory');
-      })
-      .catch(() => {
-        message('Unable to edit record.', 'error');
+  useEffect(() => {
+    setTimeout(() => {
+      $('#example').DataTable({
+        pagingType: 'full_numbers',
+        pageLength: 20,
+        processing: true,
+        dom: 'Bfrtip',
+        buttons: [
+          {
+            extend: 'print',
+            text: 'Print',
+            className: 'shadow-none btn btn-primary',
+          },
+        ],
       });
-  };
-  //update stock
-  const updateStockinInventory = () => {
-    api
-      .post('/inventory/updateinventoryStock', inventoryStock)
-      .then(() => {
-        message('Stock updated successfully', 'success');
-        getAllinventories();
-        navigate('/inventory');
-      })
-      .catch(() => {
-        message('Unable to edit record.', 'error');
-      });
-  };
+    }, 1000);
+
+    getAllinventories();
+  }, []);
+  //handle change
+  // const handleStockinput = (e, element) => {
+  //   setInventoryStock({
+  //     inventory_id: element.inventory_id,
+  //     stock: e.target.value,
+  //   });
+  //   inventoryStock.inventory_id = element.inventory_id;
+  //   inventoryStock.stock = e.target.value;
+  //   const adjustStock = parseFloat(inventoryStock.stock) - parseFloat(element.stock);
+
+  //   setAdjuststockDetails({
+  //     inventory_id: element.inventory_id,
+  //     product_id: element.productId,
+  //     adjust_stock: adjustStock,
+  //     modified_by: '',
+  //     created_by: '',
+  //     current_stock: element.stock,
+  //   });
+  // };
+  // //adjust stock
+  // const adjuststock = () => {
+  //   api
+  //     .post('/inventory/insertadjust_stock_log', adjuststockDetails)
+  //     .then(() => {
+  //       message('Stock updated successfully', 'success');
+  //       getAllinventories();
+  //       navigate('/inventory');
+  //     })
+  //     .catch(() => {
+  //       message('Unable to edit record.', 'error');
+  //     });
+  // };
+  // //update stock
+  // const updateStockinInventory = () => {
+  //   api
+  //     .post('/inventory/updateinventoryStock', inventoryStock)
+  //     .then(() => {
+  //       message('Stock updated successfully', 'success');
+  //       getAllinventories();
+  //       navigate('/inventory');
+  //     })
+  //     .catch(() => {
+  //       message('Unable to edit record.', 'error');
+  //     });
+  // };
   // TRIGGER TO IMPORT EXCEL SHEET
   const importExcel = () => {
     $('#import_excel').trigger('click');
@@ -234,7 +254,7 @@ function Inventory() {
                         <Icon.Edit2 />
                       </Link>
                     </td>
-                    <td>{element.inventory_code}</td>
+                    {/* <td>{element.inventory_code}</td> */}
                     <td>{element.product_name}</td>
                     <td>
                     <Link to={`/productEdit/${element.productId}`}>
@@ -243,7 +263,7 @@ function Inventory() {
                       </td>
                     <td>{element.unit}</td>
                     <td>{element.current_stock}</td>
-                    {stockinputOpen && stockChangeId === element.inventory_id ? (
+                    {/* {stockinputOpen && stockChangeId === element.inventory_id ? (
                       <td>
                         {' '}
                         <Input
@@ -274,8 +294,8 @@ function Inventory() {
                           <Link to="">Adjust Stock</Link>
                         </span>
                       </td>
-                    )}
-                    <td>
+                    )} */}
+                    {/* <td>
                       <span
                         onClick={() => {
                           setAdjustStockHistoryModal(true);
@@ -284,12 +304,12 @@ function Inventory() {
                       >
                         <Link to="">view</Link>
                       </span>
-                    </td>
-                    <ViewAdjustStockHistoryModal
+                    </td> */}
+                    {/* <ViewAdjustStockHistoryModal
                       adjustStockHistoryModal={adjustStockHistoryModal}
                       setAdjustStockHistoryModal={setAdjustStockHistoryModal}
                       inventoryId={modalId}
-                    />
+                    /> */}
                     <td>{element.minimum_order_level}</td>
                   </tr>
                 );
