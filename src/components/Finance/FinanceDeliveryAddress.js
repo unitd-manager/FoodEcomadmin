@@ -81,6 +81,22 @@ export default function FinanceDeliveryAddress({ financeDetails, handleInputs })
                   />
                 </FormGroup>
               </Col>
+              <Col md="3">
+                <FormGroup>
+                  <Label>Delivery status</Label>
+                  <Input
+                    type="select"
+                    onChange={handleInputs}
+                    value={financeDetails && financeDetails.delivery_status}
+                    name="delivery_status"
+                  >
+                    <option defaultValue="selected"> Please Select </option>
+                    <option value="Order placed">Order placed</option>
+                    <option value="Shipping">Shipping</option>
+                    <option value="Delivered">Delivered</option>
+                  </Input>
+                </FormGroup>
+              </Col>
             </Row>
         </FormGroup>
   </Form>

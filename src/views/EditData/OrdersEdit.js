@@ -62,7 +62,7 @@ const FinanceEdit = () => {
   const editFinanceData = () => {
     financeDetails.modification_date = creationdatetime;
     api
-      .post('/orders/editFinances', financeDetails)
+      .post('/orders/editOrders', financeDetails)
       .then(() => {
         message('Record editted successfully', 'success');
         getFinancesById();
